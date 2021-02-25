@@ -1,5 +1,5 @@
 <?php 
-session_start();
+
  class database {
 
 
@@ -9,7 +9,7 @@ session_start();
 		private static $_host = "localhost";
 		private static $_user = "root";
 		private static $_mdp = "max";
-		private static $_bdd = "GestionFichemetier";
+		private static $_bdd = "gestionfichemetier";
 
 		public static $_connexion;
 
@@ -90,7 +90,7 @@ session_start();
 		public static function selectAllVisible(){
 			self::createConnexion();
 			
-			$query = self::$_connexion->query("SELECT * FROM `Fichemetier` WHERE `vues`=`1` ");
+			$query = self::$_connexion->query("SELECT * FROM `fichemetier` WHERE `vues`=1 ");
 
 			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 

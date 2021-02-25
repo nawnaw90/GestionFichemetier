@@ -57,5 +57,31 @@ class Vues{
 			
 		}
 
+
+
+		function generateDashboardAdmin($session,$data){
+
+		$template = file_get_contents("Vues/template.tpl");
+
+		$Nav = file_get_contents("Vues/nav_admin.tpl");
+		$NavAdmin = str_replace("<!-- Nom -->", $session->nom, $Nav);
+
+		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
+	
+
+		$content = file_get_contents("Vues/liste_fiches.tpl");
+		$contents = "";
+
+		foreach ($data as $fiche_metier => $valbis) {
+			$c = str_replace("<!-- CODE ROM -->", $valbis->code_ROM , $content);
+			$c = str_replace("<!-- TITRE -->", $valbis->titre , $c);
+			$c = str_replace("<!-- DESC COURTE -->", substr($valbis->description_courte, 0, 100)."...", $c);
+			$contents .= $c;
+		}
+		return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
+		}
+
 }
 
+
+	

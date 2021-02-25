@@ -3,19 +3,29 @@
     Autoloader::register();
 
     session_start();
-
-
-    print_r($_SESSION);
-
-    echo "<br>";
-
+    $connexion = new Vues();
+    $selectAll = database::selectAllVisible();
 
 // vérification email et password existent sinon renvoie index
     if(!empty($_POST['email']) && !empty($_POST['password']))
     {
        $data = database::verificationIdentite($_POST['email'],$_POST['password']);
-       print_r($data);
+
     }
+
+
+
+
+switch ($data->role) {
+    case 'super':
+        echo $connexion->generateDashboardAdmin($data,$selectAll);
+        break;
+    
+    default:
+        # code...
+        break;
+}
+
 
 
 
