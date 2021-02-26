@@ -218,21 +218,28 @@ function generateGestionAdmins($user,$data){
 
 		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
 
+
+
 		$contentGlobal = file_get_contents("Vues/liste_admins.tpl");
-	
+
 		$content_admins = file_get_contents("Vues/admin.tpl");
 
-		$replacement = str_replace("<!-- ADMINS -->", $content_admins, $contentGlobal);
 
-		$contents = "";
 
+		$contents ="";
 		foreach ($data as $key => $value) {
-			$c = str_replace("<!-- NOM -->", $data->nom , $replacement);
-			$c = str_replace("<!-- MAIL -->", $data->mail , $c);
-			$c = str_replace("<!-- ROLE -->", $data->role, $c);
+			$c = str_replace("<!-- NOM -->", $value->nom , $content_admins);
+			$c = str_replace("<!-- MAIL -->", $value->mail , $c);
+			$c = str_replace("<!-- ROLE -->", $value->role, $c);
+
 			$contents .= $c;
+			
 		}
-		return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
+		
+		$replacement = str_replace("<!-- ADMINS -->", $contents, $contentGlobal);
+
+	
+		return str_replace("<!-- Content-Replace -->", $replacement, $str_replace1);
 		}
 
 

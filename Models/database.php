@@ -138,30 +138,25 @@
 
 
 // Ajouter une fiche métier
+public static function createFiche($post){
+    self::createConnexion();
+    try{
+        $sql = "INSERT INTO `fichemetier`( `code_ROM`, `titre`,`description_courte`, `description_longue`) VALUES (:code_ROM,:titre,:description_courte,:description_longue)";
 
-		public static function createFiche($post){
-			self::createConnexion();
-			try{
+        $req = self::$_connexion->prepare($sql);
+        $req->bindValue(":code_ROM", $_POST['code_ROM']);
+        $req->bindValue(":titre", $_POST['titre']);
+        $req->bindValue(":description_courte", $_POST['description_courte']);
+        $req->bindValue(":description_longue", $_POST['description_longue']);
 
-				
-				$sql = "INSERT INTO `Fichemetier`( `code_ROM`, `titre`,`description_courte`, `description_longue`) VALUES (:code_ROM,:titre,:description_courte,:description_longue)";
-
-				$req = self::$_connexion->prepare($sql);
-				$req->bindValue(":code_ROM", $genreTitre);
-				$req->bindValue(":titre", $genreDescription);
-				$req->bindValue(":description_courte", $genreTitre);
-				$req->bindValue(":description_longue", $genreDescription);
-
-
-				$req->execute();
-				
-				return true;
-			} catch(PDOException $e) {
-				
-				return false;
-			}
-		}
-
+        $req->execute();
+        
+        return true;
+    } catch(PDOException $e) {
+        
+        return false;
+    }
+}
 
 
 
@@ -242,7 +237,7 @@
 
 
 
-// Ajouter un Admin
+// Get ADMIN
 
  		public static function selectAllAdmin(){
 		self::createConnexion();
@@ -250,11 +245,39 @@
    
         $check->execute();
 
-        $data = $check->fetch(PDO::FETCH_OBJ);
+        $data = $check->fetchAll(PDO::FETCH_OBJ);
 
         return $data;
     }
 
+
+// Get SUPER
+
+ 		public static function selectAllSuper(){
+		self::createConnexion();
+        $check = self::$_connexion->prepare('SELECT * FROM `admin` WHERE `role` = "super" ');
+   
+        $check->execute();
+
+        $data = $check->fetchAll(PDO::FETCH_OBJ);
+
+        return $data;
+    }
+
+// DELETE ADMIN
+
+ public static function deleteAdmin($email){
+    self::createConnexion();
+    $check = self::$_connexion->prepare('SELECT mail, mot_de_passe, role, nom FROM admin WHERE mail = ?');
+    $check->execute(array($email));
+    $row = $check->rowCount();
+    if($row == 1){
+    $sql = "DELETE FROM `admin` WHERE mail=:mail";
+    $req = self::$_connexion->prepare($sql);
+    $req->bindValue(":mail", $email);
+    $req->execute();}
+    return true;
+    }
 
 
 //Supprimer un Admin

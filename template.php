@@ -76,31 +76,34 @@
 <!-- Content-Replace -->
 
 
-<div class="item-wrapper">
-<div class=itemPrincipal>
-<div class=item><p>Nom</p></div>
-<div class=item><p>Mail</p></div>
-<div class=item><p>Password</p></div>
-<div class=item><p>Role</p></div>
-<div class=item><p>Modifier</p></div>
-<div class=item><p>Supprimer</p></div>
-</div>
+<!-- add admin form -->
 
-
-<!-- ADMINS -->
-foreach ($listeJeux as $key => $value) {
-
-	echo "<div class='itemJeux'>";
-	foreach ($value as $key => $valeur) {
-	echo "<div class='item milieu'>";
-	if ($key == "Jeux_Id") {
-		echo "<img class='hide' src='img/$valeur.jpg'>";
-	}
-	echo "<p>$valeur</p></div>";
-
-	
-	}
-	echo "</div>";
+     <form action="inscriptionAdmin.php" method="post">
+                <h2 class="text-center">Ajouter</h2>       
+                <div class="form-group">
+                    <input type="text" name="nom" class="form-control" placeholder="Nom" required="required" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Email" required="required" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Mot de passe" required="required" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password_retype" class="form-control" placeholder="Re-tapez le mot de passe" required="required" autocomplete="off">
+                </div>
+                <label>Enter role</label>
+         <select name="role" required>
+             <option value="super">Super-Admin</option>
+             <option value="admin">Admin</option>
+         </select>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Inscription</button>
+                </div>   
+                <p>
+        
+     </p>
+            </form>
 
 </div>
 

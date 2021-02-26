@@ -1,10 +1,10 @@
        
 
-        <form class="form-group-add" name="FicheMetier" action="ajouter-fiche.php" method="POST">
+        <form class="form-group-add" name="FicheMetier" action="ajouter-fiche.php" enctype="multipart/form-data" method="POST">
             <h2 class="text-center">Ajouter une fiche métier</h2> 
             
             
-              <input class="form-group" type="text" name="code_ROM" placeholder="Code ROM" /> 
+              <input class="form-group" type="text" name="code_ROM" placeholder="Code ROM format:  une LETTRE suivi de 4 CHIFFRES" /> 
           
            
             <input class="form-group" type="text" name="titre"  placeholder="Titre de la Fiche"  autocomplete="off">

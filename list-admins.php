@@ -17,9 +17,21 @@ if(!isset($_SESSION['user'])){
 
 else {
 
+     if (isset($_POST['modifier-admin'])) {
+     	echo $_POST['modifier-admin'];
+     }
+
+     if (isset($_POST['supprimer-admin'])) {
+     	database::deleteAdmin($_POST['supprimer-admin']);
+     }
+
+	
+
     $selectAll = database::selectAllAdmin();
-    print_r($selectAll);
+
      echo $connexion->generateGestionAdmins($_SESSION,$selectAll);
+
+
 } 
 
 
