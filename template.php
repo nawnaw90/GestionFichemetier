@@ -45,6 +45,16 @@
 		<button type="submit" name='creationFicheMetier' value='creationFicheMetier' class="btn-nav">Trier par code ROM croissant</button>
 		</form>
 
+		<h2 class="Welcome-str">Super Admin menu</h2>
+
+		<form action="" method="post">
+		<button type="submit" name='deconnexion' value='deconnnexion' class="btn-nav">Fiches désactivées</button>
+		</form>
+
+		<form action="" method="post">
+		<button type="submit" name='deconnexion' value='deconnnexion' class="btn-nav">Gestion Admins</button>
+		</form>
+
 		<form action="" method="post">
 		<button type="submit" name='deconnexion' value='deconnnexion' class="btn-nav">Déconnexion</button>
 		</form>
@@ -63,22 +73,34 @@
 <!-- TITRE -->
 <!-- DESC COURTE -->
 
-	<!-- Content-Replace -->
+<!-- Content-Replace -->
 
-<div class="fiche-metier-description">
-	<div class="row">
-		<div class="img-wrapper-description"> <img class="img-fiche-metier" src="images/M1805.jpg"> <div class="bar"></div> </div>
-	<div class="column">
-		<div class="str-wrapper"><p>CODE ROM :<?php echo 'selectAll->code_ROM' ?></p></div>
-		<div class="str-wrapper"><h2> TITRE : <?php echo 'selectAll->titre' ?></h2></div>
-		<div class="str-wrapper"><p>DESCRIPTION COURTE :<?php echo 'selectAll->description-courte' ?></p></div>
-	</div>
-	</div>
 
-	<div>
-	<div class="str-wrapper"><p>DESCRIPTION LONGUE :<?php echo 'selectAll->description-courte' ?></p></div>
-	<div class="str-wrapper"><p>COMPÉTENCES :<?php echo 'selectAll->competences' ?></p></div>
-	</div>
+<div class="item-wrapper">
+<div class=itemPrincipal>
+<div class=item><p>Nom</p></div>
+<div class=item><p>Mail</p></div>
+<div class=item><p>Password</p></div>
+<div class=item><p>Role</p></div>
+<div class=item><p>Modifier</p></div>
+<div class=item><p>Supprimer</p></div>
+</div>
+
+
+<!-- ADMINS -->
+foreach ($listeJeux as $key => $value) {
+
+	echo "<div class='itemJeux'>";
+	foreach ($value as $key => $valeur) {
+	echo "<div class='item milieu'>";
+	if ($key == "Jeux_Id") {
+		echo "<img class='hide' src='img/$valeur.jpg'>";
+	}
+	echo "<p>$valeur</p></div>";
+
+	
+	}
+	echo "</div>";
 
 </div>
 

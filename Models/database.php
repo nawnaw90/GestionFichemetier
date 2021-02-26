@@ -59,7 +59,7 @@
                 {
 
                     $_SESSION['user'] = $data;
-                    return $data;
+                    return true;
           
                 }else{ header('Location: index.php?login_err=password'); die(); }
             }else{ header('Location: index.php?login_err=email'); die(); }
@@ -107,7 +107,7 @@
 		public static function selectAllInvisible(){
 			self::createConnexion();
 			
-			$query = self::$_connexion->query("SELECT * FROM `Fichemetier` WHERE `vues`=`0` ");
+			$query = self::$_connexion->query("SELECT * FROM `Fichemetier` WHERE `vues`=0 ");
 
 			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -124,11 +124,12 @@
 		public static function selectionnerUneFicheMetier($tuple){
 			self::createConnexion();
 			
-			$query = self::$_connexion->query("SELECT * FROM `Fichemetier` WHERE `code_ROM`= ".$tuple);
-
-			$select = $query->fetch(PDO::FETCH_OBJ);
-
-			return $select;
+			$sql = "SELECT * FROM `fichemetier` WHERE `code_ROM` = :id_tuple";
+            $data = self::$_connexion->prepare($sql);
+            $data->bindValue(":id_tuple", $tuple);
+            $data->execute();
+            $fiche = $data->fetch(PDO::FETCH_OBJ);
+            return $fiche;
 			
 		}
 
@@ -193,11 +194,11 @@
 		public static function desactiverFicheMetier($post){
 			self::createConnexion();
 			try{
-				$sql = "UPDATE `Fichemetier` SET `vues`='0' WHERE `code_ROM`=".$post['code_ROM'];
+				$sql = "UPDATE `fichemetier` SET `vues`= 0 WHERE `code_ROM` = :code";
 
 				$req = self::$_connexion->prepare($sql);
 				
-				$req->execute();
+				$req->execute([":code"=>$post]);
 				
 				return true;
 			} catch(PDOException $e) {
@@ -215,11 +216,11 @@
 		public static function activerFicheMetier($post){
 			self::createConnexion();
 			try{
-				$sql = "UPDATE `fichemetier` SET `vues`='1' WHERE `code_ROM`=".$post['code_ROM'];
+				$sql = "UPDATE `fichemetier` SET `vues`= 1 WHERE `code_ROM` = :code";
 
 				$req = self::$_connexion->prepare($sql);
 				
-				$req->execute();
+				$req->execute([":code"=>$post]);
 				
 				return true;
 			} catch(PDOException $e) {
@@ -243,28 +244,16 @@
 
 // Ajouter un Admin
 
-		// public static function createAdmin($post){
-		// 	self::createConnexion();
-		// 	try{
-				
-		// 		$sql = "INSERT INTO `admin`( `nom`, `mail`,`password`,`role`) VALUES (:nom,:mail,:password,:role)";
+ 		public static function selectAllAdmin(){
+		self::createConnexion();
+        $check = self::$_connexion->prepare('SELECT * FROM `admin` WHERE `role` = "admin" ');
+   
+        $check->execute();
 
-		// 		$req = self::$_connexion->prepare($sql);
-		// 		$req->bindValue(":nom", $post?????????????????????????????);
-		// 		$req->bindValue(":mail", $post?????????????????????????????);
-		// 		$req->bindValue(":password", $post?????????????????????????????);
-  //               $req->bindValue(":role", $post?????????????????????????????);
+        $data = $check->fetch(PDO::FETCH_OBJ);
 
-
-		// 		$req->execute();
-				
-		// 		return true;
-		// 	} catch(PDOException $e) {
-				
-		// 		return false;
-		// 	}
-		// }
-
+        return $data;
+    }
 
 
 

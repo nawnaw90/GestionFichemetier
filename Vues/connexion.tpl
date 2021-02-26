@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-<form class="formConnexion"action="connexion.php" method="post">
+<form class="formConnexion" action="page-verification.php" method="post">
 
 
             <div class="white">
