@@ -12,7 +12,7 @@ if(!isset($_SESSION['user'])){
 else {
 
 print_r($_POST);
-echo $connexion->generateCreateFiche($_SESSION,"modifier");
+echo $connexion->generateCreateFiche($selectAll,$_SESSION,"modifier");
 
 if (isset($_POST['modifier-fiche'])) {
     //FONCTION REQUETE PREPAREE ICI POUR MODIFIER LA FICHE

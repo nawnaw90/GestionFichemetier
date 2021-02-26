@@ -180,12 +180,15 @@ class Vues{
 
 					$content = file_get_contents("Vues/modifier_fiche.tpl");
 					$contents = "";
+					foreach ($database as $key => $value) {
+						
+					$c = str_replace("<!-- CODE ROM -->", $value->code_ROM , $content);
+					$c = str_replace("<!-- TITRE -->", $value->titre , $c);
+					$c = str_replace("<!-- DESC COURTE -->", $value->description_courte, $c);
+					$c = str_replace("<!-- DESC LONGUE -->", $value->description_longue, $c);
 
-		
-					$c = str_replace("<!-- CODE ROM -->", $data->code_ROM , $content);
-					$c = str_replace("<!-- TITRE -->", $data->titre , $c);
-					$c = str_replace("<!-- DESC COURTE -->", $data->description_courte, $c);
-					$c = str_replace("<!-- DESC LONGUE -->", $data->description_longue, $c);
+					}
+	
 					$contents .= $c;
 
 
@@ -219,14 +222,13 @@ function generateGestionAdmins($user,$data){
 	
 		$content_admins = file_get_contents("Vues/admin.tpl");
 
-		$replacement = str_replace("<!-- ADMINS -->", $contentGlobal, $content_admins);
+		$replacement = str_replace("<!-- ADMINS -->", $content_admins, $contentGlobal);
 
 		$contents = "";
 
 		foreach ($data as $key => $value) {
 			$c = str_replace("<!-- NOM -->", $data->nom , $replacement);
 			$c = str_replace("<!-- MAIL -->", $data->mail , $c);
-			$c = str_replace("<!-- MDP -->", $data->mot_de_passe, $c);
 			$c = str_replace("<!-- ROLE -->", $data->role, $c);
 			$contents .= $c;
 		}

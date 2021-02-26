@@ -5,13 +5,17 @@
     session_start();
     $connexion = new Vues();
     $selectAll = database::selectAllVisible();
+
+    // echo "<pre>";
+    // print_r($selectAll);
+    // echo "</pre>";
     
 
 if(!isset($_SESSION['user'])){
   header('Location:index.php');}
 else {
 
-echo $connexion->generateCreateFiche($_SESSION);
+echo $connexion->generateCreateFiche($selectAll,$_SESSION);
 
 if (isset($_POST['ajouter-fiche'])) {
     //FONCTION REQUETE PREPAREE ICI POUR AJOUTER LA FICHE
