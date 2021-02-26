@@ -29,6 +29,12 @@
                		 <input class="form-group" type="text" name="competence 9"  placeholder="Compétence 9"  autocomplete="off">
                		 <input class="form-group" type="text" name="competence 10"  placeholder="Compétence 10"  autocomplete="off">
                </div>
+
+               
+
+               <!-- COMPETENCES REPLACE -->
+               
+               
             
             <button name="submit" type="submit">Ajouter</button>
             <input name="ajouter-fiche" type="hidden" value="ajouter-fiche">

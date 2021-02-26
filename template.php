@@ -78,7 +78,7 @@
 
 <!-- add admin form -->
 
-     <form action="inscriptionAdmin.php" method="post">
+     <form action="template.php" method="post">
                 <h2 class="text-center">Ajouter</h2>       
                 <div class="form-group">
                     <input type="text" name="nom" class="form-control" placeholder="Nom" required="required" autocomplete="off">
@@ -98,14 +98,25 @@
              <option value="admin">Admin</option>
          </select>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Inscription</button>
+                    <button type="submit" class="btn btn-primary btn-block">Inscription</button>	
                 </div>   
-                <p>
-        
-     </p>
+
+              <input type="checkbox" name="1" id="1" /> <label for="case">PREMIERE COMPETENCES</label>
+              <input type="checkbox" name="2" id="2" /> <label for="case">DEUXIEME COMPETENCES</label>
+              <input type="checkbox" name="3" id="3" /> <label for="case">troisieme COMPETENCES</label>
+
+
             </form>
 
-</div>
+
+<?php 
+if (isset($_POST)) {
+	echo "<pre>";
+	print_r($_POST);
+	echo "</pre>";
+}
+?>
+
 
 
 

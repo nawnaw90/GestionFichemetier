@@ -11,7 +11,7 @@ if(!isset($_SESSION['user'])){
  echo 'Vous n\'êtes pas connecté';}
 else {
 
-print_r($_POST);
+
 echo $connexion->generateCreateFiche($selectAll,$_SESSION,"modifier");
 
 if (isset($_POST['modifier-fiche'])) {

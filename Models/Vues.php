@@ -194,15 +194,34 @@ class Vues{
 
 				break;
 			
-			case '':
+			case 'ajouter':
+
+				$competences_obj = database::selectAllCompetences();
+
+				$content_competence = file_get_contents("Vues/liste_competences.tpl");
+				$contentss = "";
+
+				foreach ($competences_obj as $key => $value) {
+					$c = str_replace("<!-- idCompetence -->", $value->idCompetence , $content_competence);
+					$c = str_replace("<!-- nomCompetence -->", $value->nomCompetence , $c);
+					$contentss .= $c;
+				}
+
+
 				$content = file_get_contents("Vues/ajouter_fiche.tpl");
+
+				$contents = str_replace("<!-- COMPETENCES REPLACE -->", $contentss , $content);
+
+
+
 				break;
-		
+
+
 		}
-	
+		
 
 		
-		return str_replace("<!-- Content-Replace -->", $content, $str_replace1);
+		return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
 	}
 			
 

@@ -74,7 +74,7 @@
 		public static function selectAll(){
 			self::createConnexion();
 			
-			$query = self::$_connexion->query("SELECT * FROM `Fichemetier`");
+			$query = self::$_connexion->query("SELECT * FROM `fichemetier`");
 
 			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -82,6 +82,19 @@
 			
 		}
 
+
+// Sélectionner les compétences
+
+		public static function selectAllCompetences(){
+			self::createConnexion();
+			
+			$query = self::$_connexion->query("SELECT * FROM `competences`");
+
+			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
+
+			return $selectAll;
+			
+		}
 
 
 
@@ -228,6 +241,8 @@ public static function createFiche($post){
 
 
 
+
+
 //CRUD POUR LE SUPER ADMINISTRATEUR DE LA MORT ---------------------------------------------------------------------------------
 //CRUD POUR LE SUPER ADMINISTRATEUR DE LA MORT ---------------------------------------------------------------------------------
 //CRUD POUR LE SUPER ADMINISTRATEUR DE LA MORT ---------------------------------------------------------------------------------
@@ -280,66 +295,42 @@ public static function createFiche($post){
     }
 
 
-//Supprimer un Admin
-   //  public static function deleteAdmin($post)
-   //  {
-   //      self::createConnexion();
-   //      try{
-				
-			// 	$sql = "DELETE FROM `admin` WHERE mail=:mail";
+//Ajouter un Admin Naw
+        public static function AjoutAdmin($data){
+        self::createConnexion();
+        $check = self::$_connexion->prepare('SELECT  mail, mot_de_passe, role, nom FROM admin WHERE mail = ?');
+        $check->execute(array($data['email']));
+        $row = $check->rowCount();
+        if($row == 0){ 
+            //vérification si le mot de passe est moins de 100 caractères
+            
+                if(strlen($data['email']) <= 100){
+                    //vérification pour la forme de l'émail
+                    if(filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+                        if($data['password'] == $data['password_retype']){
 
-			// 	$req = self::$_connexion->prepare($sql);
-			// 	$req->bindValue(":mail", $post?????????????????????????????);
-   //              $req->execute();
-				
-			// 	return true;
-			// } catch(PDOException $e) {
-				
-			// 	return false;
-			// }
-   //  }
+                            $cost = ['cost' => 12];
+                            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT, $cost);
+                            //insérer tous dans la base de données
+                            $insert = self::$_connexion->prepare('INSERT INTO admin(mail, mot_de_passe,role, nom) VALUES(:mail, :mot_de_passe,:role,:nom)');
+                            //utiliser un tableau associative
+                            $insert->execute(array(
+                                
+                                'mail' => $data['email'],
+                                'mot_de_passe' => $data['password'],
+                                'role'=>$data['role'],
+                                'nom'=>$data['nom'],
+                                
+                            ));
 
-
-
- //changer un Admin
-  //   public static function modifierAdmin($post){
-		// 	self::createConnexion();
-		// 	try{
-		// 		$sql = "UPDATE `admin` SET `mail`:mail, `mot_de_passe`=:password ,`nom`=:nom, `role`=:role WHERE `mail`= :mail";
-
-		// 		$req = self::$_connexion->prepare($sql);
-		// 		$req->bindValue(":mail", $post?????????????????????????????);
-		// 		$req->bindValue(":password", $post?????????????????????????????);
-  //               $req->bindValue(":nom", $post?????????????????????????????);
-  //               $req->bindValue(":role", $post?????????????????????????????);
-		// 		$req->execute();
-				
-		// 		return true;
-		// 	} catch(PDOException $e) {
-				
-		// 		return false;
-		// 	}
-		// }
-
-
-
-
-//changer mot de passe
-  //   public static function modifierPassword($post){
-		// 	self::createConnexion();
-		// 	try{
-		// 		$sql = "UPDATE `admin` SET  `mot_de_passe`=:password WHERE `mail`=:mail";
-
-		// 		$req = self::$_connexion->prepare($sql);
-		// 		$req->bindValue(":mail", $post?????????????????????????????);
-  //               $req->bindValue(":password", $post?????????????????????????????);
-				
-		// 		return true;
-		// 	} catch(PDOException $e) {
-				
-		// 		return false;
-		// 	}
-		// }
+                            header('Location:inscriptionForm.php?reg_err=success');
+                            die();
+                        }else{ header('Location: inscription.php?reg_err=mot_de_passe'); die();}
+                    }else{ header('Location: inscription.php?reg_err=mail'); die();}
+                }else{ header('Location: inscription.php?reg_err=mail_length'); die();}
+            
+        }else{ header('Location: inscription.php?reg_err=already'); die();}
+    }
 
     
 }

@@ -15,7 +15,7 @@ if(!isset($_SESSION['user'])){
   header('Location:index.php');}
 else {
 
-echo $connexion->generateCreateFiche($selectAll,$_SESSION);
+echo $connexion->generateCreateFiche($selectAll,$_SESSION,"ajouter");
 
 if (isset($_POST['ajouter-fiche'])) {
     //FONCTION REQUETE PREPAREE ICI POUR AJOUTER LA FICHE
