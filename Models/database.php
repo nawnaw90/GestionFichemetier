@@ -331,7 +331,19 @@ public static function createFiche($post){
             
         }else{ header('Location: inscription.php?reg_err=already'); die();}
     }
+     
+//selectionne une compétence
+public static function selectionnerCompetencesFichemetier(){
 
+			self::createConnexion();
+            $sql = "SELECT nomCompetence FROM fichemetier INNER JOIN competencesfichemetier ON fichemetier.code_ROM = competencesfichemetier.code_ROM INNER JOIN competences ON competences.idCompetence=competencesfichemetier.idCompetence WHERE fichemetier.code_ROM =:titre";
+            $req = self::$_connexion->prepare($sql);
+            $req->bindValue(":titre", $_GET['fiche']);
+            $req->execute();
+            $select = $req->fetchall(PDO::FETCH_OBJ);
+
+			return $select;
+		}
     
 }
 

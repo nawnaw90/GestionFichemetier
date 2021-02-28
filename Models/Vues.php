@@ -131,9 +131,11 @@ class Vues{
 
 		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
 	
-
+            //fiche details+list compétence//
+        
 		$content = file_get_contents("Vues/fiche_detail.tpl");
 		$contents = "";
+        
 
 		
 			$c = str_replace("<!-- CODE ROM -->", $data->code_ROM , $content);
@@ -141,12 +143,26 @@ class Vues{
 			$c = str_replace("<!-- DESC COURTE -->", $data->description_courte, $c);
 			$c = str_replace("<!-- DESC LONGUE -->", $data->description_longue, $c);
 			$contents .= $c;
+            
 		
 
 		$competences = file_get_contents("Vues/competences.tpl");
+            $competencess="";
+            
+            $competences_obj = database::selectionnerCompetencesFichemetier();
+            foreach ($competences_obj as $key => $value) {
+                    
+					$c = str_replace("<!-- COMPETENCES -->", $value->nomCompetence , $competences);
+					$competencess .= $c;
+                
+				}
 
-		$competences_replace = str_replace("<!-- COMPETENCES LISTE -->", $competences, $contents);
-
+		$contents = str_replace("<!-- COMPETENCES LISTE -->", $competencess, $contents);
+            
+           
+        
+            
+            
 		foreach ($data as $fiche_metier => $valbis) {
 			$content_competence = str_replace("<!-- CODE ROM -->", $data->code_ROM , $contents);
 		}
