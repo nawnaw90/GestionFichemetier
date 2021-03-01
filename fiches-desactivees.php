@@ -18,14 +18,25 @@ else {
 
     
 
-     if (isset($_POST['activer-fiche'])) {
+    if (isset($_POST['activer-fiche'])) {
    
     //FONCTION REQUETE PREPAREE ICI POUR MODIFIER LA FICHE
     database::activerFicheMetier($_POST['activer-fiche']);
     
 }  
+
+    if (isset($_POST['supprimer-fiche'])) {
+   
+    //FONCTION REQUETE PREPAREE ICI POUR MODIFIER LA FICHE
+    database::deleteFiche($_POST['supprimer-fiche']);
+    
+}  
+    
+
     $selectAll = database::selectAllinvisible();
     echo $connexion->generateFichesDesactivees($_SESSION,$selectAll);
+
+
 
    } 
 

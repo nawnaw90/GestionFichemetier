@@ -9,23 +9,23 @@
 
 
 
-            <div class="form-group">
+            <div class="form-group width-70">
                 <p><em>Email :</em></p>
                 <input type="email" name="email" class="form-control" placeholder="Email" required="required" autocomplete="off">
             </div>
 
-            <div class="form-group">
+            <div class="form-group width-70">
                 <p><em>Mot de passe :</em></p>
                 <input type="password" name="password" class="form-control" placeholder="Mot de passe" required="required" autocomplete="off">
             </div>
 
-            <div class="form-group">
+            <div class="form-group width-70">
                     <button type="submit" class="btn-submit">Connexion</button>
             </div>
 
             <!--msgError-->
                                      
-    
+    <!-- MEOW -->    
 
 </form>
 </div>

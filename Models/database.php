@@ -6,24 +6,24 @@
 //Access  changer les LOGINS !! TODO? DONE ?
 
 
-		private static $_host = "localhost";
-		private static $_user = "root";
-		private static $_mdp = "max";
-		private static $_bdd = "gestionfichemetier";
+        private static $_host = "localhost";
+        private static $_user = "root";
+        private static $_mdp = "max";
+        private static $_bdd = "gestionfichemetier";
 
-		public static $_connexion;
+        public static $_connexion;
 
-		public static function createConnexion(){
-			self::$_connexion = new pdo("mysql:host=".self::$_host.";dbname=".self::$_bdd.";charset=UTF8", self::$_user, self::$_mdp);
-			self::$_connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}
+        public static function createConnexion(){
+            self::$_connexion = new pdo("mysql:host=".self::$_host.";dbname=".self::$_bdd.";charset=UTF8", self::$_user, self::$_mdp);
+            self::$_connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
 
 
 
 //VERIFICATION SI PRESENCE BASE DE DONNEE
 
-		public static function getAdmin($email){
-		self::createConnexion();
+        public static function getAdmin($email){
+        self::createConnexion();
         $check = self::$_connexion->prepare('SELECT mail, mot_de_passe, role, nom FROM admin WHERE mail = ?');
    
         $check->execute(array($email));
@@ -37,8 +37,8 @@
 
 //VERIFICATION IDENTIÉ
 
-		public static function verificationIdentite($email,$password){
-		self::createConnexion();
+        public static function verificationIdentite($email,$password){
+        self::createConnexion();
 
         $check = self::$_connexion->prepare('SELECT mail, mot_de_passe, role, nom FROM admin WHERE mail = ?');
    
@@ -51,7 +51,7 @@
 
 
         if($row == 1)
-        {	
+        {   
             if(filter_var($email, FILTER_VALIDATE_EMAIL))
             {
                 
@@ -71,45 +71,45 @@
 
 // Sélectionner les fiches métiers
 
-		public static function selectAll(){
-			self::createConnexion();
-			
-			$query = self::$_connexion->query("SELECT * FROM `fichemetier`");
+        public static function selectAll(){
+            self::createConnexion();
+            
+            $query = self::$_connexion->query("SELECT * FROM `fichemetier`");
 
-			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
+            $selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 
-			return $selectAll;
-			
-		}
+            return $selectAll;
+            
+        }
 
 
 // Sélectionner les compétences
 
-		public static function selectAllCompetences(){
-			self::createConnexion();
-			
-			$query = self::$_connexion->query("SELECT * FROM `competences`");
+        public static function selectAllCompetences(){
+            self::createConnexion();
+            
+            $query = self::$_connexion->query("SELECT * FROM `competences`");
 
-			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
+            $selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 
-			return $selectAll;
-			
-		}
+            return $selectAll;
+            
+        }
 
 
 
 // Sélectionner les fiches métiers avec vues = 1
 
-		public static function selectAllVisible(){
-			self::createConnexion();
-			
-			$query = self::$_connexion->query("SELECT * FROM `fichemetier` WHERE `vues`=1 ");
+        public static function selectAllVisible(){
+            self::createConnexion();
+            
+            $query = self::$_connexion->query("SELECT * FROM `fichemetier` WHERE `vues`=1 ");
 
-			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
+            $selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 
-			return $selectAll;
-			
-		}
+            return $selectAll;
+            
+        }
 
 
 
@@ -117,16 +117,16 @@
 
 // Sélectionner les fiches métiers avec vues = 0
 
-		public static function selectAllInvisible(){
-			self::createConnexion();
-			
-			$query = self::$_connexion->query("SELECT * FROM `Fichemetier` WHERE `vues`=0 ");
+        public static function selectAllInvisible(){
+            self::createConnexion();
+            
+            $query = self::$_connexion->query("SELECT * FROM `Fichemetier` WHERE `vues`=0 ");
 
-			$selectAll = $query->fetchAll(PDO::FETCH_OBJ);
+            $selectAll = $query->fetchAll(PDO::FETCH_OBJ);
 
-			return $selectAll;
-			
-		}
+            return $selectAll;
+            
+        }
 
 
 
@@ -134,17 +134,17 @@
 
 // Sélectionner une fiche métier
 
-		public static function selectionnerUneFicheMetier($tuple){
-			self::createConnexion();
-			
-			$sql = "SELECT * FROM `fichemetier` WHERE `code_ROM` = :id_tuple";
+        public static function selectionnerUneFicheMetier($tuple){
+            self::createConnexion();
+            
+            $sql = "SELECT * FROM `fichemetier` WHERE `code_ROM` = :id_tuple";
             $data = self::$_connexion->prepare($sql);
             $data->bindValue(":id_tuple", $tuple);
             $data->execute();
             $fiche = $data->fetch(PDO::FETCH_OBJ);
             return $fiche;
-			
-		}
+            
+        }
 
 
 
@@ -177,21 +177,23 @@ public static function createFiche($post){
 // Modifier une fiche métier
 
 
-		public static function modifierFiche($post){
-			self::createConnexion();
-			try{
-				$sql = "UPDATE `Fichemetier` SET `code_ROM`=?, `titre`=? ,`description_courte`=?, `description_longue`=? WHERE `code_ROM`=".$post['code_ROM'];
+        public static function modifierFiche(){
+            self::createConnexion();
+            try{
+                $sql = 'UPDATE `Fichemetier` SET `titre`=:titre ,`description_courte`=:description_courte, `description_longue`=:description_longue WHERE `code_ROM`="'.$_POST['code_ROM'].'"';
 
-				$req = self::$_connexion->prepare($sql);
-				
-				$req->execute(array($post['code_ROM'],$post['titre'],$post['description_courte'],$post_['description_longue']));
-				
-				return true;
-			} catch(PDOException $e) {
-				
-				return false;
-			}
-		}
+                $req = self::$_connexion->prepare($sql);
+                $req->bindValue(":titre", $_POST['titre']);
+                $req->bindValue(":description_courte", $_POST['description_courte']);
+                $req->bindValue(":description_longue", $_POST['description_longue']);
+                $req->execute();
+                
+                return true;
+            } catch(PDOException $e) {
+                
+                return false;
+            }
+        }
 
 
 
@@ -199,21 +201,21 @@ public static function createFiche($post){
 
 // Désactiver une fiche métier
 
-		public static function desactiverFicheMetier($post){
-			self::createConnexion();
-			try{
-				$sql = "UPDATE `fichemetier` SET `vues`= 0 WHERE `code_ROM` = :code";
+        public static function desactiverFicheMetier($post){
+            self::createConnexion();
+            try{
+                $sql = "UPDATE `fichemetier` SET `vues`= 0 WHERE `code_ROM` = :code";
 
-				$req = self::$_connexion->prepare($sql);
-				
-				$req->execute([":code"=>$post]);
-				
-				return true;
-			} catch(PDOException $e) {
-				
-				return false;
-			}
-		}
+                $req = self::$_connexion->prepare($sql);
+                
+                $req->execute([":code"=>$post]);
+                
+                return true;
+            } catch(PDOException $e) {
+                
+                return false;
+            }
+        }
 
 
 
@@ -221,21 +223,21 @@ public static function createFiche($post){
 
 // Activer une fiche métier
 
-		public static function activerFicheMetier($post){
-			self::createConnexion();
-			try{
-				$sql = "UPDATE `fichemetier` SET `vues`= 1 WHERE `code_ROM` = :code";
+        public static function activerFicheMetier($post){
+            self::createConnexion();
+            try{
+                $sql = "UPDATE `fichemetier` SET `vues`= 1 WHERE `code_ROM` = :code";
 
-				$req = self::$_connexion->prepare($sql);
-				
-				$req->execute([":code"=>$post]);
-				
-				return true;
-			} catch(PDOException $e) {
-				
-				return false;
-			}
-		}
+                $req = self::$_connexion->prepare($sql);
+                
+                $req->execute([":code"=>$post]);
+                
+                return true;
+            } catch(PDOException $e) {
+                
+                return false;
+            }
+        }
 
 
 
@@ -254,8 +256,8 @@ public static function createFiche($post){
 
 // Get ADMIN
 
- 		public static function selectAllAdmin(){
-		self::createConnexion();
+        public static function selectAllAdmin(){
+        self::createConnexion();
         $check = self::$_connexion->prepare('SELECT * FROM `admin` WHERE `role` = "admin" ');
    
         $check->execute();
@@ -268,8 +270,8 @@ public static function createFiche($post){
 
 // Get SUPER
 
- 		public static function selectAllSuper(){
-		self::createConnexion();
+        public static function selectAllSuper(){
+        self::createConnexion();
         $check = self::$_connexion->prepare('SELECT * FROM `admin` WHERE `role` = "super" ');
    
         $check->execute();
@@ -283,14 +285,10 @@ public static function createFiche($post){
 
  public static function deleteAdmin($email){
     self::createConnexion();
-    $check = self::$_connexion->prepare('SELECT mail, mot_de_passe, role, nom FROM admin WHERE mail = ?');
-    $check->execute(array($email));
-    $row = $check->rowCount();
-    if($row == 1){
     $sql = "DELETE FROM `admin` WHERE mail=:mail";
     $req = self::$_connexion->prepare($sql);
     $req->bindValue(":mail", $email);
-    $req->execute();}
+    $req->execute();
     return true;
     }
 
@@ -323,7 +321,7 @@ public static function createFiche($post){
                                 
                             ));
 
-                            header('Location:inscriptionForm.php?reg_err=success');
+                            header('Location:list-admins.php?reg_err=success');
                             die();
                         }else{ header('Location: inscription.php?reg_err=mot_de_passe'); die();}
                     }else{ header('Location: inscription.php?reg_err=mail'); die();}
@@ -331,8 +329,50 @@ public static function createFiche($post){
             
         }else{ header('Location: inscription.php?reg_err=already'); die();}
     }
+     
+//selectionne une compétence
+public static function selectionnerCompetencesFichemetier(){
 
+            self::createConnexion();
+            $sql = "SELECT nomCompetence FROM fichemetier INNER JOIN competencesfichemetier ON fichemetier.code_ROM = competencesfichemetier.code_ROM INNER JOIN competences ON competences.idCompetence=competencesfichemetier.idCompetence WHERE fichemetier.code_ROM =:code_ROM";
+            $req = self::$_connexion->prepare($sql);
+            $req->bindValue(":code_ROM", $_GET['fiche']);
+            $req->execute();
+            $select = $req->fetchall(PDO::FETCH_OBJ);
+
+            return $select;
+        }
+//ajouter liaisons CompetencesFichemetier
+     
+public static function createCompetencesFichemetier($post){
+    self::createConnexion();
+    try{
+        $sql = "INSERT INTO `competencesfichemetier`( `code_ROM`,`idCompetence`) VALUES (:code_ROM,:idCompetence)";
+
+        $req = self::$_connexion->prepare($sql);
+        $req->bindValue(":code_ROM", $_POST['code_ROM']);
+        $req->bindValue(":idCompetence", $post);
+        $req->execute();
+        return true;
+    } catch(PDOException $e) {
+        
+        return false;
+    }
     
+}
+
+
+// Supprimer une fiche métier
+
+    public static function deleteFiche($code_ROM){
+    self::createConnexion();
+    $sql = "DELETE FROM `fichemetier` WHERE code_ROM=:code";
+    $req = self::$_connexion->prepare($sql);
+    $req->bindValue(":code", $code_ROM);
+    $req->execute();
+    return true;
+    }
+
 }
 
  
