@@ -1,25 +1,23 @@
+<form class="form-group-add" name="Admin" action="modifier-admin.php?admin=<!-- mail -->" enctype="multipart/form-data" method="POST">
+    <h2 class="text-center">Modifier un admin</h2>     
 
-  <form class="form-group-add" name="ModifierFicheMetier" action="modifier-fiche.php" method="POST">
-            <h2 class="text-center">Modifier une fiche métier</h2> 
-            
-            
-              <input class="form-group" type="text" name="nom" placeholder="nom" /> 
-          
-           
-            <input class="form-group" type="text" name="mail"  placeholder="mail"  autocomplete="off">
+            <div class="form-group">
+            <p>Nom de l'administrateur</p>
+                    <input type="text" name="nom" class="form-control" placeholder="Nom" value="<!-- Nom -->" required="required" autocomplete="off" >
+             </div>
+            <div class="form-group">
+            <p>Email de l'administrateur</p>
+                    <input type="email" name="email" class="form-control" placeholder="Email"  value="<!-- mail -->"required="required" autocomplete="off">
+            </div>
+            <div class="form-group">
 
-            <input class="form-group" type="text" name="password"  placeholder="password"  autocomplete="off">
-          
-                
-          
-           
-            
-               
+                <label><p>Quelle rôle souhaitez-vous lui attribuer ?</label>
+            <select name="role" value="<!-- Role -->" required>
+             <option value="super">Super-Admin</option>
+             <option value="admin">Admin</option>
+            </select> 
+            </P>
+            <button name="submit" type="submit">Modifier</button>
+            <input name="ajouter-admin" type="hidden" value="ajouter-admin">
 
-            
-            <button name="submit" type="submit">Ajouter</button>
-            <input  name="modifier-fiche" type="hidden" value="modifier-fiche">
         </form>
-
-
- <input type="text" name="Jeux_Id" value="<?php echo $jeux->Jeux_Id; ?>">

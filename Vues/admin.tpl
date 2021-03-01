@@ -8,7 +8,7 @@
 <div class='item'>
 <p><!-- ROLE --></p></div>
 <div class='item'>
-<form action="list-admins.php" method="post">
+<form action="modifier-admin.php" method="post">
 	<button type="submit" name='modifier-admin' value='<!-- MAIL -->' class="btn-nav">Modifier</button>
 	</form>
 </div>
