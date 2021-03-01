@@ -177,14 +177,16 @@ public static function createFiche($post){
 // Modifier une fiche métier
 
 
-		public static function modifierFiche($post){
+		public static function modifierFiche(){
 			self::createConnexion();
 			try{
-				$sql = "UPDATE `Fichemetier` SET `code_ROM`=?, `titre`=? ,`description_courte`=?, `description_longue`=? WHERE `code_ROM`=".$post['code_ROM'];
+				$sql = 'UPDATE `Fichemetier` SET `titre`=:titre ,`description_courte`=:description_courte, `description_longue`=:description_longue WHERE `code_ROM`="'.$_POST['code_ROM'].'"';
 
 				$req = self::$_connexion->prepare($sql);
-				
-				$req->execute(array($post['code_ROM'],$post['titre'],$post['description_courte'],$post_['description_longue']));
+                $req->bindValue(":titre", $_POST['titre']);
+                $req->bindValue(":description_courte", $_POST['description_courte']);
+                $req->bindValue(":description_longue", $_POST['description_longue']);
+				$req->execute();
 				
 				return true;
 			} catch(PDOException $e) {

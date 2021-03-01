@@ -196,14 +196,13 @@ class Vues{
 
 					$content = file_get_contents("Vues/modifier_fiche.tpl");
 					$contents = "";
-					foreach ($database as $key => $value) {
 						
-					$c = str_replace("<!-- CODE ROM -->", $value->code_ROM , $content);
-					$c = str_replace("<!-- TITRE -->", $value->titre , $c);
-					$c = str_replace("<!-- DESC COURTE -->", $value->description_courte, $c);
-					$c = str_replace("<!-- DESC LONGUE -->", $value->description_longue, $c);
+					$c = str_replace("<!-- CODE ROM -->", $database->code_ROM , $content);
+					$c = str_replace("<!-- TITRE -->", $database->titre , $c);
+					$c = str_replace("<!-- DESC COURTE -->", $database->description_courte, $c);
+					$c = str_replace("<!-- DESC LONGUE -->", $database->description_longue, $c);
 
-					}
+					
 	
 					$contents .= $c;
 
