@@ -15,6 +15,7 @@ if(!isset($_SESSION['user'])){
   header('Location:index.php');}
 else {
 
+
 echo $connexion->generateCreateFiche($selectAll,$_SESSION,"ajouter");
 
 if (isset($_POST['ajouter-fiche'])) {
@@ -22,7 +23,7 @@ if (isset($_POST['ajouter-fiche'])) {
     
 
 	$target_dir = "images/";
-	$newFileName = $target_dir .$_POST['code_ROM'].'.'. pathinfo($_FILES["image"]["name"] ,PATHINFO_EXTENSION); //get the file extension and append it to the new file name
+	$newFileName = $target_dir .$_POST['code_ROM'].'.'. pathinfo($_FILES["image"]["name"] ,PATHINFO_EXTENSION); //get the file extension and append it to the 
 	// $target_file = $target_dir . basename($_FILES["image"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($newFileName,PATHINFO_EXTENSION));

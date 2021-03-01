@@ -2,15 +2,16 @@
 <div class="fiche-metier-description">
 
 	<div class="absolute-btn deux">
-		<form action="modifier-fiche.php?fiche=<!-- Code ROM -->" method="get">
-		<button type="submit" name='fiche' value='<!-- CODE ROM -->' class="btn-nav">Modifier</button>
+		<form action="modifier-fiche.php" method="post">
+		<button type="submit" name='modifier-fiche' value='modifier-fiche' class="btn-nav">Modifier</button>
+		<input name="modifier-fiche" type="hidden" value='<!-- CODE ROM -->''>
 		</form>
 	</div>
 
 	<div class="absolute-btn">
 		<form action="connexion.php" method="post">
 		<button type="submit" name='supprimer-fiche' value='supprimer-fiche' class="btn-nav">Supprimer</button>
-		<input name="desactiver-fiche" type="hidden" value="<!-- CODE ROM -->">
+		<input name="desactiver-fiche" type="hidden" value='<!-- CODE ROM -->''>
 		</form>
 	</div>
 

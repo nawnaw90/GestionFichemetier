@@ -70,7 +70,6 @@ class Vues{
 		}
 
 		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
-		//
 
 		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
 	
@@ -132,11 +131,9 @@ class Vues{
 
 		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
 	
-            //fiche details+list compétence//
-        
+
 		$content = file_get_contents("Vues/fiche_detail.tpl");
 		$contents = "";
-        
 
 		
 			$c = str_replace("<!-- CODE ROM -->", $data->code_ROM , $content);
@@ -144,26 +141,12 @@ class Vues{
 			$c = str_replace("<!-- DESC COURTE -->", $data->description_courte, $c);
 			$c = str_replace("<!-- DESC LONGUE -->", $data->description_longue, $c);
 			$contents .= $c;
-            
 		
 
 		$competences = file_get_contents("Vues/competences.tpl");
-            $competencess="";
-            
-            $competences_obj = database::selectionnerCompetencesFichemetier();
-            foreach ($competences_obj as $key => $value) {
-                    
-					$c = str_replace("<!-- COMPETENCES -->", $value->nomCompetence , $competences);
-					$competencess .= $c;
-                
-				}
 
-		$contents = str_replace("<!-- COMPETENCES LISTE -->", $competencess, $contents);
-            
-           
-        
-            
-            
+		$competences_replace = str_replace("<!-- COMPETENCES LISTE -->", $competences, $contents);
+
 		foreach ($data as $fiche_metier => $valbis) {
 			$content_competence = str_replace("<!-- CODE ROM -->", $data->code_ROM , $contents);
 		}
@@ -172,22 +155,6 @@ class Vues{
 		return str_replace("<!-- Content-Replace -->", $content_competence, $str_replace1);
 		}
 
-	function generateCreateAdmin( $user){
-		$template= file_get_contents("Vues/template.tpl");
-		if($user['user']->role == "super"){
-			$Nav = file_get_contents("Vues/nav_super.tpl");
-		}else {
-			$Nav= file_get_contents("Vues/nav_admin.tpl");
-		}
-		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
-		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
-		
-		$content = file_get_contents("Vues/ajoute_admin.tpl");
-
-		return str_replace("<!-- Content-Replace -->", $content, $str_replace1);
-
-				
-	}
 
 
 
@@ -200,6 +167,8 @@ class Vues{
 			$Nav = file_get_contents("Vues/nav_admin.tpl");
 		}
 		
+
+	
 		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
 
 		
@@ -254,7 +223,6 @@ class Vues{
 		
 		return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
 	}
-
 			
 
 
@@ -295,7 +263,7 @@ function generateGestionAdmins($user,$data){
 
 
 
+}
 
 
-	}
 	
