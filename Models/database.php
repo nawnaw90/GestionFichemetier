@@ -8,7 +8,7 @@
 
         private static $_host = "localhost";
         private static $_user = "root";
-        private static $_mdp = "";
+        private static $_mdp = "max";
         private static $_bdd = "gestionfichemetier";
 
         public static $_connexion;
@@ -329,24 +329,6 @@ public static function createFiche($post){
             
         }else{ header('Location: inscription.php?reg_err=already'); die();}
     }
-     //modifier admin
-     public static function modifierAdmin($data){
-        self::createConnexion();
-            try{
-                $sql = 'UPDATE `admin` SET `nom`=:bind_nom ,`role`=:bind_role WHERE `mail`= :bind_mail';
-
-                $req = self::$_connexion->prepare($sql);
-                $req->bindValue(":bind_nom", $data['nom']);
-                $req->bindValue(":bind_role", $data['role']);
-                $req->bindValue(":bind_mail", $data['email']);
-                $req->execute();
-                
-                return header('Location:list-admins.php');
-            } catch(PDOException $e) {
-                
-                return false;
-            }
-    }
      
 //selectionne une compétence
 public static function selectionnerCompetencesFichemetier(){
@@ -389,6 +371,33 @@ public static function createCompetencesFichemetier($post){
     $req->bindValue(":code", $code_ROM);
     $req->execute();
     return true;
+    }
+     
+     //Création de compétence
+     public static function createCompetences($post){
+       self::createConnexion();
+    try{
+        $sql = "INSERT INTO `competences`( `nomCompetence`) VALUES (:nomCompetence)";
+
+        $req = self::$_connexion->prepare($sql);
+        $req->bindValue(":nomCompetence", $post);
+        $req->execute();
+        return true;
+    } catch(PDOException $e) {
+        
+        return false;
+    }  
+    }
+//supprime une compétence
+    public static function deleteCompetences($post)
+    {
+         self::createConnexion();
+    $sql = "DELETE FROM `competences` WHERE idCompetence=:idCompetence";
+    $req = self::$_connexion->prepare($sql);
+    $req->bindValue(":idCompetence", $post);
+    $req->execute();
+    return true;
+        
     }
 
 }

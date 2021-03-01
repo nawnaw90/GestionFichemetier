@@ -13,6 +13,9 @@
 		<form action="ajouter-fiche.php" method="post">
 		<button type="submit" name='creationFicheMetier' value='creationFicheMetier' class="btn-nav">Créer une fiche métier</button>
 		</form>
+        <form action="ajouter-competence.php" method="post">
+		<button type="submit" name='creationCompetences' value='creationCompetences' class="btn-nav">Gérer les compétences</button>
+		</form>
 
 
 		<h2 class="Welcome-str">Super Admin menu</h2>

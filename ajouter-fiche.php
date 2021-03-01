@@ -14,9 +14,6 @@
 if(!isset($_SESSION['user'])){
   header('Location:index.php');}
 else {
-
-echo $connexion->generateCreateFiche($selectAll,$_SESSION,"ajouter");
-
 if (isset($_POST['ajouter-fiche'])) {
     //FONCTION REQUETE PREPAREE ICI POUR AJOUTER LA FICHE
     
@@ -71,10 +68,14 @@ var_dump($_POST);
         var_dump($value);
         database::createCompetencesFichemetier($value);
     }
-header('location:connexion.php');
+    
+header('Location:connexion.php');
 
 
 }
+echo $connexion->generateCreateFiche($selectAll,$_SESSION,"ajouter");
+
+
   
     
 

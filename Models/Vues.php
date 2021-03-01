@@ -188,32 +188,6 @@ class Vues{
 
 				
 	}
-	function generateModifView($user, $data)
-	{
-		$template=file_get_contents("Vues/template.tpl");
-
-		if($user['user']->role == "super"){
-			$Nav = file_get_contents("Vues/nav_super.tpl");
-		}else {
-			$Nav= file_get_contents("Vues/nav_admin.tpl");
-		}
-
-		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
-
-		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
-
-		$content = file_get_contents("Vues/modifier_admin.tpl");
-
-		$contents = "";
-						
-		$c = str_replace("<!-- Nom -->", $data->nom , $content);
-		$c = str_replace("<!-- Role -->", $data->role , $c);
-		$c = str_replace("<!-- mail -->", $data->mail , $c);
-					$contents .= $c;
-		
-		return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
-
-	}
 
 
 
@@ -319,8 +293,42 @@ function generateGestionAdmins($user,$data){
 		return str_replace("<!-- Content-Replace -->", $replacement, $str_replace1);
 		}
 
+        function generateCreateCompetence($user)
+        {
+            $template = file_get_contents("Vues/template.tpl");
 
+		if ($user['user']->role == "super") {
+			$Nav = file_get_contents("Vues/nav_super.tpl");
+		} else {
+			$Nav = file_get_contents("Vues/nav_admin.tpl");
+		}
+		
+		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
 
+		
+		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
+            
+        
+            
+            
+            $competences_obj = database::selectAllCompetences();
+
+				$content_competence = file_get_contents("Vues/liste_competences.tpl");
+				$contentss = "";
+
+				foreach ($competences_obj as $key => $value) {
+					$c = str_replace("<!-- idCompetence -->", $value->idCompetence , $content_competence);
+					$c = str_replace("<!-- nomCompetence -->", $value->nomCompetence , $c);
+					$contentss .= $c;
+				}
+            $content=file_get_contents("Vues/ajouter_competence.tpl");
+            
+            $contents = str_replace("<!-- COMPETENCES REPLACE -->", $contentss , $content);
+            
+            
+            
+            return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
+        }
 
 
 	}
