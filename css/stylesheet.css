@@ -499,6 +499,7 @@ flex-direction: column;
 width: 80%;
 background-color: white;
 padding: 20px;
+position: relative;
 }
 
 .itemPrincipal {
