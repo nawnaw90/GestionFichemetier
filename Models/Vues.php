@@ -70,6 +70,7 @@ class Vues{
 		}
 
 		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
+		//
 
 		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
 	
@@ -171,6 +172,22 @@ class Vues{
 		return str_replace("<!-- Content-Replace -->", $content_competence, $str_replace1);
 		}
 
+	function generateCreateAdmin( $user){
+		$template= file_get_contents("Vues/template.tpl");
+		if($user['user']->role == "super"){
+			$Nav = file_get_contents("Vues/nav_super.tpl");
+		}else {
+			$Nav= file_get_contents("Vues/nav_admin.tpl");
+		}
+		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
+		$str_replace1 = str_replace("<!-- NAV-Replace -->", $NavAdmin, $template);
+		
+		$content = file_get_contents("Vues/ajoute_admin.tpl");
+
+		return str_replace("<!-- Content-Replace -->", $content, $str_replace1);
+
+				
+	}
 
 
 
@@ -183,8 +200,6 @@ class Vues{
 			$Nav = file_get_contents("Vues/nav_admin.tpl");
 		}
 		
-
-	
 		$NavAdmin = str_replace("<!-- Nom -->", $user['user']->nom, $Nav);
 
 		
@@ -196,13 +211,14 @@ class Vues{
 
 					$content = file_get_contents("Vues/modifier_fiche.tpl");
 					$contents = "";
+					foreach ($database as $key => $value) {
 						
-					$c = str_replace("<!-- CODE ROM -->", $database->code_ROM , $content);
-					$c = str_replace("<!-- TITRE -->", $database->titre , $c);
-					$c = str_replace("<!-- DESC COURTE -->", $database->description_courte, $c);
-					$c = str_replace("<!-- DESC LONGUE -->", $database->description_longue, $c);
+					$c = str_replace("<!-- CODE ROM -->", $value->code_ROM , $content);
+					$c = str_replace("<!-- TITRE -->", $value->titre , $c);
+					$c = str_replace("<!-- DESC COURTE -->", $value->description_courte, $c);
+					$c = str_replace("<!-- DESC LONGUE -->", $value->description_longue, $c);
 
-					
+					}
 	
 					$contents .= $c;
 
@@ -238,6 +254,7 @@ class Vues{
 		
 		return str_replace("<!-- Content-Replace -->", $contents, $str_replace1);
 	}
+
 			
 
 
@@ -278,7 +295,7 @@ function generateGestionAdmins($user,$data){
 
 
 
-}
 
 
+	}
 	

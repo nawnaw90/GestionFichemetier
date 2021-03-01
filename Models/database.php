@@ -8,7 +8,7 @@
 
 		private static $_host = "localhost";
 		private static $_user = "root";
-		private static $_mdp = "max";
+		private static $_mdp = "";
 		private static $_bdd = "gestionfichemetier";
 
 		public static $_connexion;
@@ -177,16 +177,14 @@ public static function createFiche($post){
 // Modifier une fiche métier
 
 
-		public static function modifierFiche(){
+		public static function modifierFiche($post){
 			self::createConnexion();
 			try{
-				$sql = 'UPDATE `Fichemetier` SET `titre`=:titre ,`description_courte`=:description_courte, `description_longue`=:description_longue WHERE `code_ROM`="'.$_POST['code_ROM'].'"';
+				$sql = "UPDATE `Fichemetier` SET `code_ROM`=?, `titre`=? ,`description_courte`=?, `description_longue`=? WHERE `code_ROM`=".$post['code_ROM'];
 
 				$req = self::$_connexion->prepare($sql);
-                $req->bindValue(":titre", $_POST['titre']);
-                $req->bindValue(":description_courte", $_POST['description_courte']);
-                $req->bindValue(":description_longue", $_POST['description_longue']);
-				$req->execute();
+				
+				$req->execute(array($post['code_ROM'],$post['titre'],$post['description_courte'],$post_['description_longue']));
 				
 				return true;
 			} catch(PDOException $e) {
@@ -325,7 +323,7 @@ public static function createFiche($post){
                                 
                             ));
 
-                            header('Location:inscriptionForm.php?reg_err=success');
+                            header('Location:list-admins.php');
                             die();
                         }else{ header('Location: inscription.php?reg_err=mot_de_passe'); die();}
                     }else{ header('Location: inscription.php?reg_err=mail'); die();}
