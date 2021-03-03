@@ -5,12 +5,12 @@
     session_start();
     $connexion = new Vues();
     $selectId_Admin = database::getAdmin($_POST['modifier-admin']);
-    print_r($selectId_Admin);
+    //print_r($selectId_Admin);
     
 
 if(!isset($_SESSION['user'])){
  echo 'Vous n\'êtes pas connecté';}
-else {
+else  if ( $_SESSION['user']->role=='super') {
 
     
         
