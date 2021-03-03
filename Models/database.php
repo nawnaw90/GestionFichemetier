@@ -8,7 +8,7 @@
 
         private static $_host = "localhost";
         private static $_user = "root";
-        private static $_mdp = "max";
+        private static $_mdp = "";
         private static $_bdd = "gestionfichemetier";
 
         public static $_connexion;
@@ -111,7 +111,24 @@
             
         }
 
+ //modifier admin
+ public static function modifierAdmin($data){
+    self::createConnexion();
+        try{
+            $sql = 'UPDATE `admin` SET `nom`=:bind_nom ,`role`=:bind_role WHERE `mail`= :bind_mail';
 
+            $req = self::$_connexion->prepare($sql);
+            $req->bindValue(":bind_nom", $data['nom']);
+            $req->bindValue(":bind_role", $data['role']);
+            $req->bindValue(":bind_mail", $data['email']);
+            $req->execute();
+
+            return header('Location:list-admins.php');
+        } catch(PDOException $e) {
+
+            return false;
+        }
+}
 
 
 
